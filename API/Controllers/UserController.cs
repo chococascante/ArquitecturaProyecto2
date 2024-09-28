@@ -32,6 +32,7 @@ namespace API.Controllers
         public void Post(User value)
         {
             UserManager userManager = new UserManager();
+            userManager.CreateUser(value);
         }
 
         // PUT api/<UserController>/5

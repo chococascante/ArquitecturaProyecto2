@@ -10,7 +10,7 @@ namespace DataAccess.CRUD
     public abstract class CRUDFactory
     {
         // DAO que no existe todavía
-        public abstract void Create();
+        public abstract void Create(BaseClass entityDTO);
         public abstract void Update();
         public abstract void Delete();
         public abstract List<T> RetrieveAll<T>();

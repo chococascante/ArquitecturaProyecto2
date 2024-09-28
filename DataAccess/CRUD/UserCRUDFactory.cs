@@ -20,9 +20,12 @@ namespace DataAccess.CRUD
             // Tiene la conexión a la base de datos
             _dao = SqlDao.GetInstance();
         }
-        public override void Create()
+        public override void Create(BaseClass entityDTO)
         {
-            throw new NotImplementedException();
+            // Obtener la operación de la base de datos
+            SqlOperation operation = _mapper.GetCreateStatement(entityDTO);
+            // Ejecutar la operación
+            _dao.ExectureStoredProcedure(operation);
         }
 
         public override void Delete()

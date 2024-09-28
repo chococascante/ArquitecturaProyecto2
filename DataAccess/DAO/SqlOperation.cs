@@ -14,7 +14,7 @@ namespace DataAccess.DAO
 
         public void AddVarcharParameter(string parameterName, string parameterValue)
         {
-            parameters.Add(new SqlParameter($"@{parameterName}", parameterValue));
+            parameters.Add(new SqlParameter("@" + parameterName, parameterValue));
         }
 
         public void AddIntegerParameter(string parameterName, int parameterValue)

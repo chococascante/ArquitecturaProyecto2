@@ -32,6 +32,18 @@ namespace DataAccess.DAO
             command.Connection = connection;
             command.CommandText = operation.ProcedureName;
             command.CommandType = CommandType.StoredProcedure;
+
+            // Agregar los parámetros
+            foreach (var parameter in operation.parameters)
+            {
+                command.Parameters.Add(parameter);
+            }
+
+            // Abrimos conexión a la base
+            connection.Open();
+
+            // Ejecutamos el comando
+            command.ExecuteNonQuery();
         }
     }
 }

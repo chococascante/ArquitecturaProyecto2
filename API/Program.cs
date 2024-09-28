@@ -14,6 +14,17 @@ namespace API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "CorsPolicy",
+                    policy =>
+                    {
+                        policy.WithOrigins("https://localhost:7201");
+                        policy.AllowAnyHeader(); //application/json application/xml
+                        policy.AllowAnyMethod(); //GET, POST, PUT,Delete
+                    });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,6 +40,8 @@ namespace API
 
 
             app.MapControllers();
+
+            app.UseCors("CorsPolicy");
 
             app.Run();
         }
