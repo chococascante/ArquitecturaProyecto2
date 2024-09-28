@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DTO;
+using BusinessLogic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,8 +31,7 @@ namespace API.Controllers
         [HttpPost]
         public void Post(User value)
         {
-            Console.WriteLine($"{value.Email}");
-            _users.Add(value);
+            UserManager userManager = new UserManager();
         }
 
         // PUT api/<UserController>/5
