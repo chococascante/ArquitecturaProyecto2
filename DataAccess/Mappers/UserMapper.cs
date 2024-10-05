@@ -12,12 +12,28 @@ namespace DataAccess.Mappers
     {
         public BaseClass BuildObject(Dictionary<string, object> objectRow)
         {
-            throw new NotImplementedException();
+            return new User()
+            {
+                Id = objectRow["id"].ToString(),
+                Name = objectRow["nombre"].ToString(),
+                LastName = objectRow["apellido"].ToString(),
+                Password = objectRow["password"].ToString(),
+                ProfilePicture = objectRow["imagenPerfil"].ToString(),
+                Email = objectRow["correoElectronico"].ToString()
+            };
         }
 
         public List<BaseClass> BuildObjects(List<Dictionary<string, object>> objectRows)
         {
-            throw new NotImplementedException();
+            List<BaseClass> usuarios = new List<BaseClass>();
+
+            foreach(var row in objectRows)
+            {
+                var usuario = (User)BuildObject(row);
+                usuarios.Add(usuario);
+            }
+
+            return usuarios;
         }
 
         public SqlOperation GetCreateStatement(BaseClass entityDTO)
@@ -36,24 +52,50 @@ namespace DataAccess.Mappers
             return operation;
         }
 
-        public SqlOperation GetDeleteStatement(BaseClass entityDTO)
+        public SqlOperation GetDeleteStatement(string id)
         {
-            throw new NotImplementedException();
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "dbo.sp_eliminarUsuario";
+
+            operation.AddVarcharParameter("id", id);
+
+            return operation;
         }
 
         public SqlOperation GetRetrieveAllStatement()
         {
-            throw new NotImplementedException();
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_obtenerUsuarios"
+            };
+
+            return operation;
         }
 
-        public SqlOperation GetRetrieveStatement(BaseClass entityDTO)
+        public SqlOperation GetRetrieveStatement(string id)
         {
-            throw new NotImplementedException();
+            SqlOperation operation= new SqlOperation { ProcedureName = "dbo.sp_obtenerUsuarioPorId" };
+            operation.AddVarcharParameter("id", id);
+
+            return operation;
+
         }
 
         public SqlOperation GetUpdateStatement(BaseClass entityDTO)
         {
-            throw new NotImplementedException();
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "dbo.sp_actualizarUsuario";
+
+            User user = (User)entityDTO;
+
+            operation.AddVarcharParameter("id", user.Id);
+            operation.AddVarcharParameter("nombre", user.Name);
+            operation.AddVarcharParameter("apellido", user.LastName);
+            operation.AddVarcharParameter("correoElectronico", user.Email);
+            operation.AddVarcharParameter("password", user.Password);
+            operation.AddVarcharParameter("imagenPerfil", user.ProfilePicture);
+
+            return operation;
         }
     }
 }

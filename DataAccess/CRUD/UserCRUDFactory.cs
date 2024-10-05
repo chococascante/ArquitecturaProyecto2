@@ -28,24 +28,43 @@ namespace DataAccess.CRUD
             _dao.ExectureStoredProcedure(operation);
         }
 
-        public override void Delete()
+        public override void Delete(string id)
         {
-            throw new NotImplementedException();
+            var operation = _mapper.GetDeleteStatement(id);
+            _dao.ExectureStoredProcedure(operation);
         }
 
         public override List<T> RetrieveAll<T>()
         {
-            throw new NotImplementedException();
+            var listaUsuarios = new List<T>();
+            var operation = _mapper.GetRetrieveAllStatement();
+            var result = _dao.ExecuteProcedureWithQuery(operation);
+
+            if (result.Count > 0)
+            {
+                var mappedResults = _mapper.BuildObjects(result);
+
+                foreach (var usuario in mappedResults)
+                {
+                    var usuarioConvertido = (T)Convert.ChangeType(usuario, typeof(T));
+                    listaUsuarios.Add(usuarioConvertido);
+                }
+            }
+
+            return listaUsuarios;
         }
 
-        public override BaseClass RetrieveById(int id)
+        public override BaseClass RetrieveById(string id)
         {
-            throw new NotImplementedException();
+            var operation = _mapper.GetRetrieveStatement(id);
+            var result = _dao.ExecuteStoredProcedureWithUniqueResult(operation);
+            return _mapper.BuildObject(result);
         }
 
-        public override void Update()
+        public override void Update(BaseClass entityDTO)
         {
-            throw new NotImplementedException();
+            var operation = _mapper.GetUpdateStatement(entityDTO);
+            _dao.ExectureStoredProcedure(operation);
         }
     }
 }

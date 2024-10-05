@@ -10,21 +10,21 @@ namespace API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private static List<User> _users = new List<User>();
         // GET: api/<UserController>
         [HttpGet]
-        public List<User> Get()
+        public ActionResult<List<User>> Get()
         {
             // return users
-            return _users;
-
+            var userManager = new UserManager();
+            return userManager.RetrieveAllUsers();
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<User> Get(string id)
         {
-            return "value";
+            var userManager = new UserManager();
+            return userManager.RetrieveUserById(id);
         }
 
         // POST api/<UserController>
@@ -37,14 +37,18 @@ namespace API.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(User value)
         {
+            var userManager = new UserManager();
+            userManager.UpdateUser(value);
         }
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string value)
         {
+            var userManager = new UserManager();
+            userManager.DeleteUser(value);
         }
     }
 }

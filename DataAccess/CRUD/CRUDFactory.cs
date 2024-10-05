@@ -11,9 +11,9 @@ namespace DataAccess.CRUD
     {
         // DAO que no existe todavía
         public abstract void Create(BaseClass entityDTO);
-        public abstract void Update();
-        public abstract void Delete();
+        public abstract void Update(BaseClass entityDTO);
+        public abstract void Delete(string id);
         public abstract List<T> RetrieveAll<T>();
-        public abstract BaseClass RetrieveById(int id);
+        public abstract BaseClass RetrieveById(string id);
     }
 }
