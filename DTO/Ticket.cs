@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class Ticket : BaseClass
+    public class Ticket
     {
+        [Key]
+        public string Id { get; set; }
         [Required]
         [ForeignKey("User")]
         public string UserId { get; set; }

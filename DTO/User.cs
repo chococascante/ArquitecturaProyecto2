@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class User : BaseClass
+    public class User
     {
+        [Key]
+        public string Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
